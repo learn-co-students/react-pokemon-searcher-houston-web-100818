@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 
-class PokemonForm extends React.Component {
+export default class PokemonForm extends React.Component {
   constructor() {
     super()
 
@@ -51,5 +51,3 @@ class PokemonForm extends React.Component {
     )
   }
 }
-
-export default PokemonForm

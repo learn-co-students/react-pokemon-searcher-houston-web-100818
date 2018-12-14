@@ -4,7 +4,7 @@ import PokemonForm from './PokemonForm'
 import { Search } from 'semantic-ui-react'
 import _ from 'lodash'
 
-class PokemonPage extends React.Component {
+export default class PokemonPage extends React.Component {
   
   constructor() {
     super()
@@ -85,5 +85,3 @@ class PokemonPage extends React.Component {
     )
   }
 }
-
-export default PokemonPage

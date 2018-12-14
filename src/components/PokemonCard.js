@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from 'semantic-ui-react'
 
-class PokemonCard extends React.Component {
+export default class PokemonCard extends React.Component {
 
   constructor() {
     super()
@@ -39,5 +39,3 @@ class PokemonCard extends React.Component {
     )
   }
 }
-
-export default PokemonCard
