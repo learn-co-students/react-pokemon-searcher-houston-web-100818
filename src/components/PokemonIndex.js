@@ -24,6 +24,37 @@ class PokemonPage extends React.Component {
     })
   }
 
+
+  formatNewPokemon = (pokemonData) => {
+    return {
+      "name": pokemonData.name,
+      "stats": [
+        {
+          "value": pokemonData.hp,
+          "name": "hp"
+        }
+      ],
+      "sprites": {
+        "front": pokemonData.frontUrl,
+        "back": pokemonData.backUrl
+      }
+    }
+  }
+  
+  addPokemon = (pokemonData) => {
+    const newPokemon = this.formatNewPokemon(pokemonData)
+    fetch("http://localhost:3000/pokemon", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newPokemon)
+    })
+    this.setState({
+      pokemon: [newPokemon, ...this.state.pokemon]
+    })
+  }
+
   handleSearchChange = (searchTerm) => {
     this.setState({
       searchTerm: searchTerm
@@ -45,9 +76,9 @@ class PokemonPage extends React.Component {
       <div>
         <h1>Pokemon Searcher</h1>
         <br />
-        <Search onSearchChange={_.debounce((e, data) => this.handleSearchChange(data.value), 500)} showNoResults={false} />
+        <Search onSearchChange={_.debounce((e, input) => this.handleSearchChange(input.value), 500)} showNoResults={false} />
         <br />
-        <PokemonForm />
+        <PokemonForm addPokemon={this.addPokemon} />
         <br />
         <PokemonCollection pokemon={this.filterPokemonByName()} />
       </div>
