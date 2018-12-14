@@ -1,11 +1,12 @@
 import React from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Confirm, Button } from 'semantic-ui-react'
 
 class PokemonCard extends React.Component {
 
   constructor() {
     super()
     this.state = {
+      open: false,
       isFront: true
     }
   }
@@ -25,11 +26,8 @@ class PokemonCard extends React.Component {
     return hpStat.value
   }
 
-  deletePokemon = () => {
-    fetch(`http://localhost:3000/pokemon/${this.props.pokemon.id}`, {
-      method: "DELETE"
-    })
-  }
+  // open = ()=>this.setState({open: true})
+  // close = ()=>this.setState({open: false})
 
   render() {
     return (
@@ -45,14 +43,21 @@ class PokemonCard extends React.Component {
              />
           </div>
           <div className="content">
-            <div className="header">{this.capitalizer(this.props.pokemon.name)}</div>
+            <div className="header">{this.capitalizer(this.props.pokemon.name)} 
+            </div>
           </div>
           <div className="extra content">
             <span>
               <i className="icon heartbeat red" 
-              onClick = {this.deletePokemon} />
+              // onClick = {this.props.deletePokemon(this.props.pokemon.id)} 
+              />
               {this.findHP(this.props.pokemon)}
             </span>
+            <div>
+              <i className='delete icon' 
+              link='true' 
+              onClick/>
+            </div>
           </div>
         </div>
       </Card>

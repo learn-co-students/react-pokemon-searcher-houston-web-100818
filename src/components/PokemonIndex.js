@@ -24,17 +24,19 @@ class PokemonPage extends React.Component {
   }
 
   addPokemon = (pokemon) => {
-    this.setState( state => { 
-      state.pokemonArray = [...this.state.pokemonArray, pokemon] 
-      
-      fetch('http://localhost:3000/pokemon', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(pokemon)   
+    fetch('http://localhost:3000/pokemon', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(pokemon)   
+    })
+    .then(() => {
+      this.setState( state => { 
+        state.pokemonArray = [...this.state.pokemonArray, pokemon] 
+        this.search('')
+        return state
       })
-      return state
     })
   }
   
@@ -53,6 +55,19 @@ class PokemonPage extends React.Component {
     this.setState({
       filteredArray: this.filterMethod(searchTerm)
   })}, 200)
+
+  deletePokemon = (id) => {
+    fetch(`http://localhost:3000/pokemon/${id}`, {
+      method: "DELETE"
+    })  
+    .then(() => {
+      const delID = this.state.filteredArray.findIndex((pokemon)=>pokemon.id===id)
+      this.setState(state => {
+        state.filteredArray.splice(delID,1)
+        return state
+      })
+    })  
+  }
 
   render() {
     console.log('rendering')
