@@ -42,17 +42,18 @@ export default class PokemonCard extends React.Component {
                     : "no types listed"}
                 </em>
               </p>
-              <i className="icon heartbeat red" />
-              {this.props.stats.find(stat => {
-                  return stat.name === "hp";
+              <button onClick={this.toggleDetail}>
+                {this.state.showDetails ? "Hide Stats" : "Show Stats"}
+              </button>
+              {this.state.showDetails && <PokemonDetails {...this.props}/> }
+              <h5>
+                <i className="icon heartbeat red" />
+                {this.props.stats.find(stat => {
+                    return stat.name === "hp";
                 }).value} hp
+              </h5>
+              <br />
             </span>
-          </div>
-          <div>
-            <button onClick={this.toggleDetail}>
-              {this.state.showDetails ? "Hide Details" : "Show Details"}
-            </button>
-            {this.state.showDetails && <PokemonDetails {...this.props}/> }
           </div>
         </div>
       </Card>;

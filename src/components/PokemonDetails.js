@@ -4,10 +4,9 @@ const PokemonDetails = (props) => {
     console.log(props)
     return (
         <div>
-            <p>Height: {props.height}</p>
-            <p>Weight: {props.weight}</p>
-            <p>Abilities: {props.abilities.join(', ')}</p>
-            <p>Moves: {props.moves.join(', ')}</p>
+            {props.stats.map((stat, index) => {
+                return (stat.name !== 'hp' && <h5>{stat.name}: {stat.value}</h5>)
+            })}
         </div>
     )
 }

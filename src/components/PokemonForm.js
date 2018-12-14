@@ -40,10 +40,10 @@ export default class PokemonForm extends React.Component {
         <h3>Add a Pokemon!</h3>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group widths="equal">
-            <Form.Input value={this.state.name} onChange={this.handleInputChange} fluid label="Name" placeholder="Name" name="name" />
-            <Form.Input value={this.state.hp} onChange={this.handleInputChange} fluid label="hp" placeholder="hp" name="hp" />
-            <Form.Input value={this.state.frontUrl} onChange={this.handleInputChange} fluid label="Front Image URL" placeholder="url" name="frontUrl" />
-            <Form.Input value={this.state.backUrl} onChange={this.handleInputChange} fluid label="Back Image URL" placeholder="url" name="backUrl" />
+            <Form.Input onChange={this.handleInputChange} fluid label="Name" placeholder="Name" name="name" />
+            <Form.Input onChange={this.handleInputChange} fluid label="hp" placeholder="hp" name="hp" />
+            <Form.Input onChange={this.handleInputChange} fluid label="Front Image URL" placeholder="url" name="frontUrl" />
+            <Form.Input onChange={this.handleInputChange} fluid label="Back Image URL" placeholder="url" name="backUrl" />
           </Form.Group>
           <Form.Button>Submit</Form.Button>
         </Form>
