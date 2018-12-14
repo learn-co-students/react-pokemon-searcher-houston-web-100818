@@ -49,9 +49,9 @@ export default class PokemonPage extends React.Component {
       })
       this.setState({
         pokemon: pokemon,
-        pokemonTypes: types,
-        pokemonMoves: moves,
-        pokemonAbilities: abilities
+        pokemonTypes: types.sort(),
+        pokemonMoves: moves.sort(),
+        pokemonAbilities: abilities.sort()
       })
     })
   }
