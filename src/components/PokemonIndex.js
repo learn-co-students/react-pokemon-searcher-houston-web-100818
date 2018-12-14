@@ -31,21 +31,27 @@ export default class PokemonPage extends React.Component {
       let moves = []
       let abilities = []
       pokemon.forEach(poke => {
-        poke.types.forEach(type => {
-          if (!types.includes(type)) {
-            types.push(type)
-          }
-        })
-        poke.moves.forEach(move => {
-          if (!moves.includes(move)) {
-            moves.push(move)
-          }
-        })
-        poke.abilities.forEach(ability => {
-          if (!abilities.includes(ability)) {
-            abilities.push(ability);
-          }
-        });
+        if (poke.types) {
+          poke.types.forEach(type => {
+            if (!types.includes(type)) {
+              types.push(type)
+            }
+          })
+        }
+        if (poke.moves) {
+          poke.moves.forEach(move => {
+            if (!moves.includes(move)) {
+              moves.push(move)
+            }
+          })
+        }
+        if (poke.abilities) {
+          poke.abilities.forEach(ability => {
+            if (!abilities.includes(ability)) {
+              abilities.push(ability);
+            }
+          });
+        }
       })
       this.setState({
         pokemon: pokemon,
@@ -74,14 +80,15 @@ export default class PokemonPage extends React.Component {
   }
   
   addPokemon = (pokemonData) => {
+    const newPokemon = this.formatNewPokemon(pokemonData)
     fetch("http://localhost:3000/pokemon", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.formatNewPokemon(pokemonData))
+      body: JSON.stringify(newPokemon)
     })
-    .then((newPokemon) => {
+    .then(() => {
       this.setState({
         pokemon: [newPokemon, ...this.state.pokemon]
       })
