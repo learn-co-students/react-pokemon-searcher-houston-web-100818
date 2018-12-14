@@ -10,6 +10,7 @@ class PokemonPage extends React.Component {
     super()
     this.state = {
       pokemonArray: [],
+      filteredArray: []
 
     }
   }
@@ -18,11 +19,18 @@ class PokemonPage extends React.Component {
     fetch('http://localhost:3000/pokemon')
       .then(resp => resp.json())
       .then(data => this.setState({
-        pokemonArray: data
+        pokemonArray: data,
+        filteredArray: data
       }))
   }
 
+  handleSearch() {
+
+  }
+
   render() {
+    console.log('filteredArray:', this.state.filteredArray)
+    console.log(<Search.props />)
     return (
       <div>
         <h1>Pokemon Searcher</h1>

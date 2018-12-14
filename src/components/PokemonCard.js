@@ -12,6 +12,12 @@ class PokemonCard extends React.Component {
 
   handleClick = () => this.setState({ isFront: !this.state.isFront })
 
+  findHP = (pokemon) => {
+    const hpStat = pokemon.stats.find((stat) => stat.name === 'hp')
+
+    return hpStat.value
+  }
+
   render() {
     return (
       <Card>
@@ -31,7 +37,7 @@ class PokemonCard extends React.Component {
           <div className="extra content">
             <span>
               <i className="icon heartbeat red" />
-              {this.props.pokemon.stats[5].value}
+              {this.findHP(this.props.pokemon)}
             </span>
           </div>
         </div>
