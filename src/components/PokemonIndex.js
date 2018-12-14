@@ -13,10 +13,12 @@ export default class PokemonPage extends React.Component {
       pokemon: [],
       pokemonTypes: [],
       pokemonMoves: [],
+      pokemonAbilities: [],
       filters: {
         name: '',
         type: null,
-        move: null
+        move: null,
+        ability: null
       }
     }
   }
@@ -27,6 +29,7 @@ export default class PokemonPage extends React.Component {
     .then(pokemon => {
       let types = []
       let moves = []
+      let abilities = []
       pokemon.forEach(poke => {
         poke.types.forEach(type => {
           if (!types.includes(type)) {
@@ -38,11 +41,17 @@ export default class PokemonPage extends React.Component {
             moves.push(move)
           }
         })
+        poke.abilities.forEach(ability => {
+          if (!abilities.includes(ability)) {
+            abilities.push(ability);
+          }
+        });
       })
       this.setState({
         pokemon: pokemon,
         pokemonTypes: types,
-        pokemonMoves: moves
+        pokemonMoves: moves,
+        pokemonAbilities: abilities
       })
     })
   }
@@ -97,25 +106,37 @@ export default class PokemonPage extends React.Component {
     console.log(this.state.filters.type)
     console.log(this.state.filters.move)
     switch (true) {
-      case (this.state.filters.type !== null && this.state.filters.move !== null):
-      console.log("option 1")
+      case this.state.filters.type !== null && this.state.filters.move !== null && this.state.filters.ability !== null:
+        return this.state.pokemon.filter(pokemon => {
+          return pokemon.name.startsWith(this.state.filters.name) && pokemon.types.includes(this.state.filters.type) && pokemon.moves.includes(this.state.filters.move) && pokemon.abilities.includes(this.state.filters.ability);
+        });
+      case this.state.filters.type !== null && this.state.filters.move !== null:
         return this.state.pokemon.filter(pokemon => {
           return pokemon.name.startsWith(this.state.filters.name) && pokemon.types.includes(this.state.filters.type) && pokemon.moves.includes(this.state.filters.move);
         });
-      case (this.state.filters.type !== null):
-      console.log("option 2")
+      case this.state.filters.type !== null && this.state.filters.ability !== null:
+        return this.state.pokemon.filter(pokemon => {
+          return pokemon.name.startsWith(this.state.filters.name) && pokemon.types.includes(this.state.filters.type) && pokemon.abilities.includes(this.state.filters.ability);
+        });
+      case this.state.filters.move !== null && this.state.filters.ability !== null:
+        return this.state.pokemon.filter(pokemon => {
+          return pokemon.name.startsWith(this.state.filters.name) && pokemon.moves.includes(this.state.filters.move) && pokemon.abilities.includes(this.state.filters.ability);
+        });
+      case this.state.filters.type !== null:
         return this.state.pokemon.filter(pokemon => {
           return pokemon.name.startsWith(this.state.filters.name) && pokemon.types.includes(this.state.filters.type);
         });
-      case (this.state.filters.move !== null):
-      console.log("option 3")
+      case this.state.filters.move !== null:
         return this.state.pokemon.filter(pokemon => {
           return pokemon.name.startsWith(this.state.filters.name) && pokemon.moves.includes(this.state.filters.move);
         });
-      default:
-      console.log("option 4")
+      case this.state.filters.ability !== null:
         return this.state.pokemon.filter(pokemon => {
-          return pokemon.name.startsWith(this.state.filters.name)
+          return pokemon.name.startsWith(this.state.filters.name) && pokemon.abilities.includes(this.state.filters.ability);
+        });
+      default:
+        return this.state.pokemon.filter(pokemon => {
+          return pokemon.name.startsWith(this.state.filters.name);
         });
     }
 
@@ -136,6 +157,8 @@ export default class PokemonPage extends React.Component {
         <FilterSelect category="type" handleSelection={this.handleSelection} choices={this.state.pokemonTypes} />
         <h3>Filter Pokemon by Move:</h3>
         <FilterSelect category ="move" handleSelection={this.handleSelection} choices={this.state.pokemonMoves} />
+        <h3>Filter Pokemon by Ability:</h3>
+        <FilterSelect category ="ability" handleSelection={this.handleSelection} choices={this.state.pokemonAbilities} />
         <br />
         <PokemonForm addPokemon={this.addPokemon} />
         <br />

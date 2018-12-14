@@ -2,6 +2,10 @@
   "pokemon": [
     {
       "name": "bulbasaur",
+      "abilities": [
+        "overgrow",
+        "chlorophyll"
+      ],
       "moves": [],
       "stats": [
         {
