@@ -24,6 +24,17 @@ export default class PokemonCard extends React.Component {
     })
   }
 
+  renderHp = () => {
+    return (
+      <h5>
+        <i className="icon heartbeat red" />
+        {this.props.stats.find(stat => {
+          return stat.name === "hp";
+        }).value} hp
+      </h5>
+    )
+  }
+
   render() {
     return <Card>
         <div>
@@ -46,12 +57,7 @@ export default class PokemonCard extends React.Component {
                 {this.state.showDetails ? "Hide Stats" : "Show Stats"}
               </button>
               {this.state.showDetails && <PokemonDetails {...this.props}/> }
-              <h5>
-                <i className="icon heartbeat red" />
-                {this.props.stats.find(stat => {
-                    return stat.name === "hp";
-                }).value} hp
-              </h5>
+              {this.renderHp()}
               <br />
             </span>
           </div>

@@ -74,16 +74,17 @@ export default class PokemonPage extends React.Component {
   }
   
   addPokemon = (pokemonData) => {
-    const newPokemon = this.formatNewPokemon(pokemonData)
     fetch("http://localhost:3000/pokemon", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newPokemon)
+      body: JSON.stringify(this.formatNewPokemon(pokemonData))
     })
-    this.setState({
-      pokemon: [newPokemon, ...this.state.pokemon]
+    .then((newPokemon) => {
+      this.setState({
+        pokemon: [newPokemon, ...this.state.pokemon]
+      })
     })
   }
 
