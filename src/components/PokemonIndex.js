@@ -103,8 +103,6 @@ export default class PokemonPage extends React.Component {
   }
 
   filterPokemon = () => {
-    console.log(this.state.filters.type)
-    console.log(this.state.filters.move)
     switch (true) {
       case this.state.filters.type !== null && this.state.filters.move !== null && this.state.filters.ability !== null:
         return this.state.pokemon.filter(pokemon => {
