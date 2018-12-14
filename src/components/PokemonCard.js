@@ -12,10 +12,23 @@ class PokemonCard extends React.Component {
 
   handleClick = () => this.setState({ isFront: !this.state.isFront })
 
+  capitalizer = (name) => {
+    const nameArray = name.split('')
+    const capLetter = nameArray[0].toUpperCase()
+    nameArray.splice(0,1,capLetter)
+    return nameArray.join('')
+  }
+
   findHP = (pokemon) => {
     const hpStat = pokemon.stats.find((stat) => stat.name === 'hp')
 
     return hpStat.value
+  }
+
+  deletePokemon = () => {
+    fetch(`http://localhost:3000/pokemon/${this.props.pokemon.id}`, {
+      method: "DELETE"
+    })
   }
 
   render() {
@@ -32,11 +45,12 @@ class PokemonCard extends React.Component {
              />
           </div>
           <div className="content">
-            <div className="header">{this.props.pokemon.name}</div>
+            <div className="header">{this.capitalizer(this.props.pokemon.name)}</div>
           </div>
           <div className="extra content">
             <span>
-              <i className="icon heartbeat red" />
+              <i className="icon heartbeat red" 
+              onClick = {this.deletePokemon} />
               {this.findHP(this.props.pokemon)}
             </span>
           </div>

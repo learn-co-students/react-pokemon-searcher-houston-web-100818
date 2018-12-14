@@ -11,7 +11,6 @@ class PokemonPage extends React.Component {
     this.state = {
       pokemonArray: [],
       filteredArray: []
-
     }
   }
 
@@ -24,22 +23,48 @@ class PokemonPage extends React.Component {
       }))
   }
 
-  handleSearch() {
-
+  addPokemon = (pokemon) => {
+    this.setState( state => { 
+      state.pokemonArray = [...this.state.pokemonArray, pokemon] 
+      
+      fetch('http://localhost:3000/pokemon', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pokemon)   
+      })
+      return state
+    })
+  }
+  
+  filterMethod = (text) => {
+    return this.state.pokemonArray.filter((pokemon) => {
+      const result = pokemon.name.search(text)
+      if (result===-1){
+        return false
+      } else {
+        return true
+      }
+    })
   }
 
+  search = _.debounce((searchTerm) => {
+    this.setState({
+      filteredArray: this.filterMethod(searchTerm)
+  })}, 200)
+
   render() {
-    console.log('filteredArray:', this.state.filteredArray)
-    console.log(<Search.props />)
+    console.log('rendering')
     return (
       <div>
         <h1>Pokemon Searcher</h1>
         <br />
-        <Search onSearchChange={_.debounce(() => console.log('🤔'), 500)} showNoResults={false} />
+        <Search onSearchChange={e => this.search(e.target.value)} showNoResults={false} />
         <br />
-        <PokemonCollection pokemonArray = {this.state.pokemonArray} />
+        <PokemonCollection pokemonArray = {this.state.filteredArray} />
         <br />
-        <PokemonForm />
+        <PokemonForm addPokemon={this.addPokemon} />
       </div>
     )
   }
