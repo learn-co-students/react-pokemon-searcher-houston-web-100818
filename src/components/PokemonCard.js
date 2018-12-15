@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Confirm, Button } from 'semantic-ui-react'
+import { Card, Confirm, Icon } from 'semantic-ui-react'
 
 class PokemonCard extends React.Component {
 
@@ -7,7 +7,8 @@ class PokemonCard extends React.Component {
     super()
     this.state = {
       open: false,
-      isFront: true
+      isFront: true,
+      showStats: false
     }
   }
 
@@ -26,8 +27,12 @@ class PokemonCard extends React.Component {
     return hpStat.value
   }
 
-  // open = ()=>this.setState({open: true})
-  // close = ()=>this.setState({open: false})
+  open = ()=>this.setState({open: true})
+  close = ()=>this.setState({open: false})
+  fakedeletePokemon = ()=>{
+    console.log(`this is when pokemon #${this.props.pokemon.id} gets deleted`)
+    this.close()
+  }
 
   render() {
     return (
@@ -48,16 +53,22 @@ class PokemonCard extends React.Component {
           </div>
           <div className="extra content">
             <span>
-              <i className="icon heartbeat red" 
-              // onClick = {this.props.deletePokemon(this.props.pokemon.id)} 
-              />
+              <i className="icon heartbeat red" />
               {this.findHP(this.props.pokemon)}
             </span>
             <div>
-              <i className='delete icon' 
-              link='true' 
-              onClick/>
+              <Icon name='eye' />
             </div>
+              <Icon name='delete' 
+              onClick = {this.open} 
+              />
+              <Confirm 
+              open={this.state.open} 
+              content = "Are you sure you want to release this pokemon to the wild?"
+              cancelButton={'No! I want it!'}
+              onCancel={this.close} 
+              confirmButton={'Fly! Be free!'}
+            onConfirm={ this.fakedeletePokemon } />
           </div>
         </div>
       </Card>

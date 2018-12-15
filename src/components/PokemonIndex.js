@@ -79,7 +79,7 @@ class PokemonPage extends React.Component {
         <br />
         <PokemonCollection pokemonArray = {this.state.filteredArray} />
         <br />
-        <PokemonForm addPokemon={this.addPokemon} />
+        <PokemonForm addPokemon={this.addPokemon} deletePokemon={this.deletePokemon} />
       </div>
     )
   }
