@@ -13,6 +13,32 @@ class PokemonForm extends React.Component {
     }
   }
 
+  handleSubmit = (e) => {
+    let pokemon = {}
+    pokemon.name = e.target.name.value
+    pokemon.stats = [{
+      'name': 'hp', 
+      'value': e.target.hp.value
+    }]
+    if (e.target.frontUrl.value === ''){  
+      pokemon.sprites = {
+        'front': require('../placeholder.jpg'),
+        'back': require('../placeholder.jpg')
+      }
+    } else {
+      pokemon.sprites = {
+        'front': e.target.frontUrl.value,
+        'back': e.target.backUrl.value
+      }
+    }
+    console.log('adding',pokemon)
+    this.props.addPokemon(pokemon)
+    e.target.name.value = ''
+    e.target.hp.value = ''
+    e.target.frontUrl.value = ''
+    e.target.backUrl.value = ''
+  }
+
   render() {
     return (
       <div>
