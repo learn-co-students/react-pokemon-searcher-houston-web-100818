@@ -48,7 +48,7 @@ class PokemonForm extends React.Component {
       },
       body: JSON.stringify(newPoke)
     }).then(newPokes => {
-      console.log(newPokes);
+      console.log(newPoke);
     });
   };
 

@@ -8,7 +8,8 @@ class PokemonPage extends React.Component {
   constructor() {
     super();
     this.state = {
-      pokemon: []
+      pokemon: [],
+      input: ""
     };
   }
 
@@ -27,6 +28,14 @@ class PokemonPage extends React.Component {
     });
   };
 
+  search = _.debounce(input => {
+    this.setState(state => {
+      state.input = input;
+      return state;
+    }),
+      500;
+  });
+
   render() {
     // console.log(pokemon)
     return (
@@ -34,7 +43,7 @@ class PokemonPage extends React.Component {
         <h1>Pokemon Searcher</h1>
         <br />
         <Search
-          onSearchChange={_.debounce(() => console.log("🤔"), 500)}
+          onSearchChange={e => this.search(e.target.value)}
           showNoResults={false}
         />
         <br />
